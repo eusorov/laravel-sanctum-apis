@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\TodoItemController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\UserController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     // User route
@@ -12,13 +13,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return $request->user();
     });
 
-    // Todo routes with nested comments
-    Route::apiResource('todos', TodoItemController::class);
-    Route::get('todos/{todoId}/comments', [TodoItemController::class, 'getComments']);
-    Route::post('todos/{todoId}/comments', [TodoItemController::class, 'addComment']);
+    Route::apiResource('users', UserController::class);
 
-    // Comments routes
-    Route::apiResource('comments', CommentController::class);
-});
+   });
+
+// public routes
+Route::apiResource('todos', TodoItemController::class);
+Route::get('todos/{todoId}/comments', [TodoItemController::class, 'getComments']);
+Route::post('todos/{todoId}/comments', [TodoItemController::class, 'addComment']);
+
+// Comments routes
+Route::apiResource('comments', CommentController::class);
 
 require __DIR__ . '/auth.php';

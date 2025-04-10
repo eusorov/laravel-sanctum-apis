@@ -1,0 +1,55 @@
+type Todo {
+    id: ID!
+    title: String!
+    description: String
+    completed: Boolean!
+    user: User! @belongsTo
+    comments: [Comment!]! @hasMany
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Comment {
+    id: ID!
+    message: String!
+    author: User! @belongsTo(relation: "author")
+    todo: Todo! @belongsTo
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    todos: [Todo!]! @hasMany
+    comments: [Comment!]! @hasMany(relation: "authoredComments")
+}
+
+type Query {
+    todos(page: Int! @eq): [Todo!]! @paginate
+    todo(id: ID! @eq): Todo @find
+    todoComments(todoId: ID! @eq): [Comment!]! @field(resolver: "TodoResolver@comments")
+}
+
+type Mutation {
+    createTodo(
+        title: String! @rules(apply: ["required", "string", "max:255"])
+        description: String
+        completed: Boolean = false
+    ): Todo! @field(resolver: "TodoResolver@create")
+
+    updateTodo(
+        id: ID!
+        title: String @rules(apply: ["string", "max:255"])
+        description: String
+        completed: Boolean
+    ): Todo! @field(resolver: "TodoResolver@update")
+
+    deleteTodo(id: ID!): Boolean! @field(resolver: "TodoResolver@delete")
+
+    addComment(
+        todoId: ID!
+        message: String! @rules(apply: ["required", "string"])
+    ): Comment! @field(resolver: "TodoResolver@addComment")
+}

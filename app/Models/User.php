@@ -49,6 +49,7 @@ class User extends Authenticatable
 
     public function todoItems()
     {
-        return $this->hasMany(TodoItem::class);
+        return $this->hasMany(TodoItem::class, 'user_id');
     }
+
 }
