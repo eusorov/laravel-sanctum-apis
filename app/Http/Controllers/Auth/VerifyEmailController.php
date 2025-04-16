@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Verified;
-use Naveed\BreezeNext\Requests\EmailVerificationRequest;
+use App\Http\Requests\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
 
 class VerifyEmailController extends Controller
@@ -16,7 +16,7 @@ class VerifyEmailController extends Controller
     {
         if ($request->user()->hasVerifiedEmail()) {
             return redirect()->intended(
-                config('app.frontend_url').'/dashboard?verified=1'
+                config('app.frontend_url') . '/dashboard?verified=1'
             );
         }
 
@@ -25,7 +25,7 @@ class VerifyEmailController extends Controller
         }
 
         return redirect()->intended(
-            config('app.frontend_url').'/dashboard?verified=1'
+            config('app.frontend_url') . '/dashboard?verified=1'
         );
     }
 }

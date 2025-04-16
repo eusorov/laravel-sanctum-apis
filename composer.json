@@ -11,7 +11,6 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "mll-lab/laravel-graphiql": "^3.3",
-        "naveed/breeze-next": "^1.0",
         "nuwave/lighthouse": "^6.54"
     },
     "require-dev": {
